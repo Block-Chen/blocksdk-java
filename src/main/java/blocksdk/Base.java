@@ -27,10 +27,10 @@ public class Base {
     }
 
     public CompletableFuture<Map<String, Object>> request(String method, String path) {
-        return request(method, path, Collections.<String, String>emptyMap());
+        return request(method, path, Collections.<String, Object>emptyMap());
     }
 
-    public CompletableFuture<Map<String, Object>> request(String method, String path, Map<String, String> data) {
+    public CompletableFuture<Map<String, Object>> request(String method, String path, Map<String, Object> data) {
         CompletableFuture<Map<String, Object>> future = CompletableFuture.supplyAsync(() -> {
             String url = this.endpoint + "/" + this.version + "/" + this.chainName + path;
             StringBuffer response = new StringBuffer();
@@ -39,10 +39,10 @@ public class Base {
             try {
                 if ("GET".equals(method)) {
                     StringBuilder query = new StringBuilder();
-                    for (Map.Entry<String, String> entry : data.entrySet()) {
+                    for (Map.Entry<String, Object> entry : data.entrySet()) {
                         query.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
                         query.append("=");
-                        query.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+                        query.append(URLEncoder.encode(entry.getValue().toString(), "UTF-8"));  // Object를 문자열로 변환
                         query.append("&");
                     }
                     if (query.length() > 0) {
@@ -59,7 +59,8 @@ public class Base {
                     con.setRequestProperty("Content-Type", "application/json");
                     con.setDoOutput(true);
                     OutputStream os = con.getOutputStream();
-                    os.write(data.toString().getBytes());
+                    JSONObject json = new JSONObject(data); // Map을 JSON으로 변환
+                    os.write(json.toString().getBytes());
                     os.flush();
                     os.close();
                 }

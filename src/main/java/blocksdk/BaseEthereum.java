@@ -17,248 +17,248 @@ public class BaseEthereum extends Base {
         super(chainName, apiToken, endpoint, version);
     }
 
-    public CompletableFuture<Map<String, Object>> getBlockchainInfo() {
+    public CompletableFuture<Map<String, Object>> GetBlockchainInfo() {
         return this.request("GET", "/info");
     }
 
-    public CompletableFuture<Map<String, Object>> GetBlock(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetBlock(Map<String, Object> request)
     {
-        String path = request.get("block");
+        Object path = request.get("block");
         return this.request("GET", "/block/" + path, request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetAddresses(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetAddresses(Map<String, Object> request)
     {
         return this.request("GET", "/address", request);
     }
 
-    public CompletableFuture<Map<String, Object>> CreateAddress(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> CreateAddress(Map<String, Object> request)
     {
         return this.request("POST", "/address", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetAddressInfo(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetAddressInfo(Map<String, Object> request)
     {
-        String address = request.get("address");
+        Object address = request.get("address");
         return this.request("GET", "/address/"+address+"/info", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetAddressBalance(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetAddressBalance(Map<String, Object> request)
     {
-        String address = request.get("address");
+        Object address = request.get("address");
         return this.request("GET", "/address/"+address+"/balance");
     }
 
-    public CompletableFuture<Map<String, Object>> Send(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> Send(Map<String, Object> request)
     {
-        String from_address = request.get("from_address");
+        Object from_address = request.get("from_address");
         return this.request("POST", "/address/"+from_address+"/send", request);
     }
 
-    public CompletableFuture<Map<String, Object>> SendTransaction(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> SendTransaction(Map<String, Object> request)
     {
         return this.request("POST", "/transaction/send", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetTransaction(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetTransaction(Map<String, Object> request)
     {
-        String hash = request.get("hash");
+        Object hash = request.get("hash");
         return this.request("GET", "/transaction/"+hash+"");
     }
 
-    public CompletableFuture<Map<String, Object>> GetTokenInfo(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetTokenInfo(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
+        Object contract_address = request.get("contract_address");
         return this.request("GET", "/token/"+contract_address+"/info");
     }
 
-    public CompletableFuture<Map<String, Object>> SendToken(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> SendToken(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
-        String from_address = request.get("from_address");
+        Object contract_address = request.get("contract_address");
+        Object from_address = request.get("from_address");
         return this.request("POST", "/token/"+contract_address+"/"+from_address+"/transfer", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetTokenBalance(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetTokenBalance(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
-        String from_address = request.get("from_address");
+        Object contract_address = request.get("contract_address");
+        Object from_address = request.get("from_address");
         return this.request("GET", "/token/"+contract_address+"/"+from_address+"/balance");
     }
 
-    public CompletableFuture<Map<String, Object>> GetTokenTxs(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetTokenTxs(Map<String, Object> request)
     {
-        String from_address = request.get("from_address");
+        Object from_address = request.get("from_address");
         return this.request("GET", "/token/"+from_address+"/transactions", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetTokenContractTxs(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetTokenContractTxs(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
-        String from_address = request.get("from_address");
+        Object contract_address = request.get("contract_address");
+        Object from_address = request.get("from_address");
         return this.request("GET", "/token/"+contract_address+"/"+from_address+"/transactions", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetTokenAllBalance(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetTokenAllBalance(Map<String, Object> request)
     {
-        String from_address = request.get("from_address");
+        Object from_address = request.get("from_address");
         return this.request("GET", "/token/"+from_address+"/all-balance", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetSingleNfts(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetSingleNfts(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
+        Object contract_address = request.get("contract_address");
         return this.request("GET", "/single-nft/"+contract_address+"/nfts", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetSingleOwnerNfts(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetSingleOwnerNfts(Map<String, Object> request)
     {
-        String owner_address = request.get("owner_address");
+        Object owner_address = request.get("owner_address");
         return this.request("GET", "/single-nft/"+owner_address+"/owner-nfts", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetSingleCreatorNfts(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetSingleCreatorNfts(Map<String, Object> request)
     {
-        String creator_address = request.get("creator_address");
+        Object creator_address = request.get("creator_address");
         return this.request("GET", "/single-nft/"+creator_address+"/creator-nfts", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetSingleTxs(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetSingleTxs(Map<String, Object> request)
     {
-        String from_address = request.get("from_address");
+        Object from_address = request.get("from_address");
         return this.request("GET", "/single-nft/"+from_address+"/transactions", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetSingleNftOwnerNfts(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetSingleNftOwnerNfts(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
-        String owner_address = request.get("owner_address");
+        Object contract_address = request.get("contract_address");
+        Object owner_address = request.get("owner_address");
         return this.request("GET", "/single-nft/"+contract_address+"/"+owner_address+"/owner-nfts", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetSingleNftCreatorNfts(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetSingleNftCreatorNfts(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
-        String creator_address = request.get("creator_address");
+        Object contract_address = request.get("contract_address");
+        Object creator_address = request.get("creator_address");
         return this.request("GET", "/single-nft/"+contract_address+"/"+creator_address+"/creator-nfts", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetSingleNftTxs(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetSingleNftTxs(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
-        String from_address = request.get("from_address");
+        Object contract_address = request.get("contract_address");
+        Object from_address = request.get("from_address");
         return this.request("GET", "/single-nft/"+contract_address+"/"+from_address+"/from-transactions", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetSingleNftInfo(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetSingleNftInfo(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
-        String token_id = request.get("token_id");
+        Object contract_address = request.get("contract_address");
+        Object token_id = request.get("token_id");
         return this.request("GET", "/single-nft/"+contract_address+"/"+token_id+"/info", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetSingleNftTokenTxs(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetSingleNftTokenTxs(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
-        String token_id = request.get("token_id");
+        Object contract_address = request.get("contract_address");
+        Object token_id = request.get("token_id");
         return this.request("GET", "/single-nft/"+contract_address+"/"+token_id+"/nft-transactions", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetSingleNftAuctionNfts(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetSingleNftAuctionNfts(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
+        Object contract_address = request.get("contract_address");
         return this.request("GET", "/single-nft/"+contract_address+"/auction-nfts", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetSingleNftSellerNfts(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetSingleNftSellerNfts(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
-        String seller_address = request.get("seller_address");
+        Object contract_address = request.get("contract_address");
+        Object seller_address = request.get("seller_address");
         return this.request("GET", "/single-nft/"+contract_address+"/"+seller_address+"/seller-nfts", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetSingleNftTokenBids(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetSingleNftTokenBids(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
-        String token_id = request.get("token_id");
+        Object contract_address = request.get("contract_address");
+        Object token_id = request.get("token_id");
         return this.request("GET", "/single-nft/"+contract_address+"/"+token_id+"/nft-bids", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetMultiNfts(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetMultiNfts(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
+        Object contract_address = request.get("contract_address");
         return this.request("GET", "/multi-nft/"+contract_address+"/nfts", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetMultiOwnerNfts(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetMultiOwnerNfts(Map<String, Object> request)
     {
-        String owner_address = request.get("owner_address");
+        Object owner_address = request.get("owner_address");
         return this.request("GET", "/multi-nft/"+owner_address+"/owner-nfts", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetMultiCreatorNfts(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetMultiCreatorNfts(Map<String, Object> request)
     {
-        String creator_address = request.get("creator_address");
+        Object creator_address = request.get("creator_address");
         return this.request("GET", "/multi-nft/"+creator_address+"/creator-nfts", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetMultiTxs(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetMultiTxs(Map<String, Object> request)
     {
-        String from_address = request.get("from_address");
+        Object from_address = request.get("from_address");
         return this.request("GET", "/multi-nft/"+from_address+"/transactions", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetMultiNftOwnerNfts(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetMultiNftOwnerNfts(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
-        String owner_address = request.get("owner_address");
+        Object contract_address = request.get("contract_address");
+        Object owner_address = request.get("owner_address");
         return this.request("GET", "/multi-nft/"+contract_address+"/"+owner_address+"/owner-nfts", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetMultiNftCreatorNfts(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetMultiNftCreatorNfts(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
-        String creator_address = request.get("creator_address");
+        Object contract_address = request.get("contract_address");
+        Object creator_address = request.get("creator_address");
         return this.request("GET", "/multi-nft/"+contract_address+"/"+creator_address+"/creator-nfts", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetMultiNftTxs(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetMultiNftTxs(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
-        String from_address = request.get("from_address");
+        Object contract_address = request.get("contract_address");
+        Object from_address = request.get("from_address");
         return this.request("GET", "/multi-nft/"+contract_address+"/"+from_address+"/from-transactions", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetMultiNftInfo(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetMultiNftInfo(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
-        String token_id = request.get("token_id");
+        Object contract_address = request.get("contract_address");
+        Object token_id = request.get("token_id");
         return this.request("GET", "/multi-nft/"+contract_address+"/"+token_id+"/info", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetMultiNftTokenTxs(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetMultiNftTokenTxs(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
-        String token_id = request.get("token_id");
+        Object contract_address = request.get("contract_address");
+        Object token_id = request.get("token_id");
         return this.request("GET", "/multi-nft/"+contract_address+"/"+token_id+"/nft-transactions", request);
     }
 
-    public CompletableFuture<Map<String, Object>> GetMultiNftSellerNfts(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> GetMultiNftSellerNfts(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
-        String seller_address = request.get("seller_address");
+        Object contract_address = request.get("contract_address");
+        Object seller_address = request.get("seller_address");
         return this.request("GET", "/multi-nft/"+contract_address+"/"+seller_address+"/seller-nfts", request);
     }
 
-    public CompletableFuture<Map<String, Object>> ReadContract(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> ReadContract(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
+        Object contract_address = request.get("contract_address");
         return this.request("POST", "/contract/"+contract_address+"/read", request);
     }
 
-    public CompletableFuture<Map<String, Object>> WriteContract(Map<String, String> request)
+    public CompletableFuture<Map<String, Object>> WriteContract(Map<String, Object> request)
     {
-        String contract_address = request.get("contract_address");
+        Object contract_address = request.get("contract_address");
         return this.request("POST", "/contract/"+contract_address+"/write", request);
     }
 }

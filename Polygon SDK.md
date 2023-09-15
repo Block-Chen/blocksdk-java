@@ -3,194 +3,207 @@
 함수 호출에 필요한 매개변수 또는 반환되는 데이터에 대해서는 REST API 개발자 문서를 참고해 주시길 바랍니다.
 
 ### 클라이언트 생성 (테스트넷)
-```cs
-using BlockSDK;
-var maticClient = new BlockSDK.Polygon("YOU_TOKEN");
+```java
+Polygon maticClient = new Polygon("YOU_TOKEN");
 ```
 
 ### 클라이언트 생성 (메인넷)
 엔드 포인트를 지정해주지 않는경우 테스트넷으로 기본 설정되어 호출 됩니다 메인넷은 아래 예시와 같이 클라이언트 생성시 두번째 매개변수를 메인넷으로 지정해 주시길 바랍니다.
-```cs
-using BlockSDK;
-var maticClient = new BlockSDK.Polygon("YOU_TOKEN","https://mainnet-api.blocksdk.com");
+```java
+Polygon maticClient = new Polygon("YOU_TOKEN","https://mainnet-api.blocksdk.com");
 ```
 
 ### 블록체인 정보
 ```
 GET /v3/matic/info
 ```
-```cs
-var result = await maticClient.GetBlockChainInfo();
+```java
+Map<String, Object> result = maticClient.GetBlockChainInfo().join();
 ```
 
 ### 블록 정보
 ```
 GET /v3/matic/block/<block>
 ```
-```cs
-var result = await maticClient.GetBlock(new Dictionary<string, object>{
-    {"block", "blockNumber 또는 blockHash"}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("block", "blockNumber 또는 blockHash")
+
+Map<String, Object> result = maticClient.GetBlock(data).join();
 ```
 
 ### 주소 목록
 ```
 GET /v3/matic/address
 ```
-```cs
-var result = await maticClient.GetAddresses(new Dictionary<string, object>{
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetAddresses(data).join();
 ```
 
 ### 주소 정보
 ```
 GET /v3/matic/address/<address>/info
 ```
-```cs
-var result = await maticClient.GetAddressInfo(new Dictionary<string, object>{
-    {"address", "주소"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("address", "주소")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetAddressInfo(data).join();
 ```
 
 ### 주소 생성
 ```
 POST /v3/matic/address
 ```
-```cs
-var result = await maticClient.CreateAddress(new Dictionary<string, object>{
-    {"name", "test"}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("name", "test")
+
+Map<String, Object> result = maticClient.CreateAddress(data).join();
 ```
 
 ### 주소 잔액
 ```
 GET /v3/matic/address/<address>/balance
 ```
-```cs
-var result = await maticClient.GetAddressBalance(new Dictionary<string, object>{
-    {"address", "주소"}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("address", "주소")
+
+Map<String, Object> result = maticClient.GetAddressBalance(data).join();
 ```
 
 ### 주소 거래 전송
 ```
 POST /v3/matic/address/<from_address>/send
 ```
-```cs
-var result = await maticClient.Send(new Dictionary<string, object>{
-    {"from", "주소"},
-    {"to", "주소"},
-    {"amount", "보낼 양"},
-    {"private_key", "보내는 주소 키"}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("from", "주소")
+data.put("to", "주소")
+data.put("amount", "보낼 양")
+data.put("private_key", "보내는 주소 키")
+
+Map<String, Object> result = maticClient.Send(data).join();
 ```
 
 ### 거래 전송
 ```
 POST /v3/matic/transaction/send
 ```
-```cs
-var result = await maticClient.SendTransaction(new Dictionary<string, object>{
-    {"hex", "서명된 트랜잭션 hex"}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("hex", "서명된 트랜잭션 hex")
+
+Map<String, Object> result = maticClient.SendTransaction(data).join();
 ```
 
 ### 거래 조회
 ```
 GET /v3/matic/transaction/<tx_hash>
 ```
-```cs
-var result = await maticClient.GetTransaction(new Dictionary<string, object>{
-    {"hash", "트랜잭션 해쉬"}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("hash", "트랜잭션 해쉬")
+
+Map<String, Object> result = maticClient.GetTransaction(data).join();
 ```
 
 ### ERC20 토큰 정보
 ```
 GET /v3/matic/token/<contract_address>/info
 ```
-```cs
-var result = await maticClient.GetTokenInfo(new Dictionary<string, object>{
-    {"contract_address", "ERC20 토큰 컨트렉트 주소"}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("contract_address", "ERC20 토큰 컨트렉트 주소")
+
+Map<String, Object> result = maticClient.GetTokenInfo(data).join();
 ```
 
 ### ERC20 토큰 잔액
 ```
 GET /v3/matic/token/<contract_address>/<from_address>/balance
 ```
-```cs
-var result = await maticClient.GetTokenBalance(new Dictionary<string, object>{
-    {"contract_address", "ERC20 토큰 컨트렉트 주소"},
-    {"from_address", "잔액을 조회할 주소"}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("contract_address", "ERC20 토큰 컨트렉트 주소")
+data.put("from_address", "잔액을 조회할 주소")
+
+Map<String, Object> result = maticClient.GetTokenBalance(data).join();
 ```
 
 ### ERC20 토큰 전송
 ```
 POST /v3/matic/token/<contract_address>/<from_address>/transfer
 ```
-```cs
-var result = await maticClient.SendToken(new Dictionary<string, object>{
-    {"contract_address", "ERC20 토큰 컨트렉트 주소"},
-    {"from_address", "토큰을 전송할 주소"},
-    {"to", "주소"},
-    {"amount", "보낼 양"},
-    {"private_key", "보내는 주소 키"}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("contract_address", "ERC20 토큰 컨트렉트 주소")
+data.put("from_address", "토큰을 전송할 주소")
+data.put("to", "주소")
+data.put("amount", "보낼 양")
+data.put("private_key", "보내는 주소 키")
+
+Map<String, Object> result = maticClient.SendToken(data).join();
 ```
 
 ### ERC20 특정 주소 거래 조회
 ```
 GET /v3/matic/token/<from_address>/transactions
 ```
-```cs
-var result = await maticClient.GetTokenTxs(new Dictionary<string, object>{
-    {"from_address", "거래 내역을 조회할 주소"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("from_address", "거래 내역을 조회할 주소")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetTokenTxs(data).join();
 ```
 
 ### ERC20 특정 컨트렉트 거래 조회
 ```
 GET /v3/matic/token/<contract_address>/<from_address>/transactions
 ```
-```cs
-var result = await maticClient.GetTokenContractTxs(new Dictionary<string, object>{
-    {"contract_address", "ERC20 토큰 컨트렉트 주소"},
-    {"from_address", "거래 내역을 조회할 주소"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("contract_address", "ERC20 토큰 컨트렉트 주소")
+data.put("from_address", "거래 내역을 조회할 주소")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetTokenContractTxs(data).join();
 ```
 
 ### ERC20 소유내역 조회
 ```
 GET /v3/matic/token/<from_address>/all-balance
 ```
-```cs
-var result = await maticClient.GetTokenAllBalance(new Dictionary<string, object>{
-    {"from_address", "토큰 목록을 조회할 주소"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("from_address", "토큰 목록을 조회할 주소")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetTokenAllBalance(data).join();
 ```
 
 ### ERC721(NFT) 특정 컨트렉트 NFT 목록
 ```
 GET /v3/matic/single-nft/<contract_address>/nfts
 ```
-```cs
-var result = await maticClient.GetSingleNfts(new Dictionary<string, object>{
-    {"contract_address", "목록을 조회할 주소"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("contract_address", "목록을 조회할 주소")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetSingleNfts(data).join();
 ```
 
 
@@ -198,12 +211,13 @@ var result = await maticClient.GetSingleNfts(new Dictionary<string, object>{
 ```
 GET /v3/matic/single-nft/<owner_address>/owner-nfts
 ```
-```cs
-var result = await maticClient.GetSingleOwnerNfts(new Dictionary<string, object>{
-    {"owner_address", "목록을 조회할 주소"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("owner_address", "목록을 조회할 주소")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetSingleOwnerNfts(data).join();
 ```
 
 
@@ -211,24 +225,26 @@ var result = await maticClient.GetSingleOwnerNfts(new Dictionary<string, object>
 ```
 GET /v3/matic/single-nft/<creator_address>/creator-nfts
 ```
-```cs
-var result = await maticClient.GetSingleCreatorNfts(new Dictionary<string, object>{
-    {"creator_address", "목록을 조회할 주소"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("creator_address", "목록을 조회할 주소")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetSingleCreatorNfts(data).join();
 ```
 
 ### ERC721(NFT) 특정 월렛 NFT 거래 조회
 ```
 GET /v3/matic/single-nft/<from_address>/transactions
 ```
-```cs
-var result = await maticClient.GetSingleTxs(new Dictionary<string, object>{
-    {"from_address", "토큰 목록을 조회할 주소"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("from_address", "토큰 목록을 조회할 주소")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetSingleTxs(data).join();
 ```
 
 
@@ -236,13 +252,14 @@ var result = await maticClient.GetSingleTxs(new Dictionary<string, object>{
 ```
 GET /v3/matic/single-nft/<contract_address>/<owner_address>/owner-nfts
 ```
-```cs
-var result = await maticClient.GetSingleNftOwnerNfts(new Dictionary<string, object>{
-    {"contract_address", "컨트렉트 주소"},
-    {"owner_address", "월렛 주소"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("contract_address", "NFT 컨트렉트 주소")
+data.put("owner_address", "토큰 목록을 조회할 주소")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetSingleNftOwnerNfts(data).join();
 ```
 
 
@@ -250,13 +267,14 @@ var result = await maticClient.GetSingleNftOwnerNfts(new Dictionary<string, obje
 ```
 GET /v3/matic/single-nft/<contract_address>/<creator_address>/creator-nfts
 ```
-```cs
-var result = await maticClient.GetSingleNftCreatorNfts(new Dictionary<string, object>{
-    {"contract_address", "NFT 컨트렉트 주소"},
-    {"creator_address", "토큰 목록을 조회할 주소"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("contract_address", "NFT 컨트렉트 주소")
+data.put("creator_address", "토큰 목록을 조회할 주소")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetSingleNftCreatorNfts(data).join();
 ```
 
 
@@ -264,13 +282,14 @@ var result = await maticClient.GetSingleNftCreatorNfts(new Dictionary<string, ob
 ```
 GET /v3/matic/single-nft/<contract_address>/<from_address>/from-transactions
 ```
-```cs
-var result = await maticClient.GetSingleNftTxs(new Dictionary<string, object>{
-    {"contract_address", "NFT 컨트렉트 주소"},
-    {"from_address", "목록을 조회할 주소"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("contract_address", "NFT 컨트렉트 주소")
+data.put("from_address", "목록을 조회할 주소")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetSingleNftTxs(data).join();
 ```
 
 
@@ -278,13 +297,14 @@ var result = await maticClient.GetSingleNftTxs(new Dictionary<string, object>{
 ```
 GET /v3/matic/single-nft/<contract_address>/<token_id>/nft-transactions
 ```
-```cs
-var result = await maticClient.GetSingleNftTokenTxs(new Dictionary<string, object>{
-    {"contract_address",  "NFT 컨트렉트 주소"},
-    {"token_id",  "NFT 토큰 ID"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("contract_address", "NFT 컨트렉트 주소")
+data.put("token_id", "NFT 토큰 ID")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetSingleNftTokenTxs(data).join();
 ```
 
 
@@ -292,13 +312,14 @@ var result = await maticClient.GetSingleNftTokenTxs(new Dictionary<string, objec
 ```
 GET /v3/matic/single-nft/<contract_address>/<token_id>/info
 ```
-```cs
-var result = await maticClient.GetSingleNftInfo(new Dictionary<string, object>{
-    {"contract_address", "NFT 컨트렉트 주소"},
-    {"token_id",  "NFT 토큰 ID"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("contract_address", "NFT 컨트렉트 주소")
+data.put("token_id", "NFT 토큰 ID")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetSingleNftInfo(data).join();
 ```
 
 
@@ -306,12 +327,13 @@ var result = await maticClient.GetSingleNftInfo(new Dictionary<string, object>{
 ```
 GET /v3/matic/multi-nft/<contract_address>/nfts
 ```
-```cs
-var result = await maticClient.GetMultiNfts(new Dictionary<string, object>{
-    {"contract_address" :"NFT 컨트렉트 주소"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("contract_address", "NFT 컨트렉트 주소")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetMultiNfts(data).join();
 ```
 
 
@@ -319,12 +341,13 @@ var result = await maticClient.GetMultiNfts(new Dictionary<string, object>{
 ```
 GET /v3/matic/multi-nft/<owner_address>/owner-nfts
 ```
-```cs
-var result = await maticClient.GetMultiOwnerNfts(new Dictionary<string, object>{
-    {"owner_address", "목록을 조회할 주소"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("owner_address", "목록을 조회할 주소")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetMultiOwnerNfts(data).join();
 ```
 
 
@@ -332,12 +355,13 @@ var result = await maticClient.GetMultiOwnerNfts(new Dictionary<string, object>{
 ```
 GET /v3/matic/multi-nft/<creator_address>/creator-nfts
 ```
-```cs
-var result = await maticClient.GetMultiCreatorNfts(new Dictionary<string, object>{
-    {"creator_address", "목록을 조회할 주소"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("creator_address", "목록을 조회할 주소")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetMultiCreatorNfts(data).join();
 ```
 
 
@@ -345,12 +369,13 @@ var result = await maticClient.GetMultiCreatorNfts(new Dictionary<string, object
 ```
 GET /v3/matic/multi-nft/<from_address>/transactions
 ```
-```cs
-var result = await maticClient.GetMultiTxs(new Dictionary<string, object>{
-    {"from_address", "목록을 조회할 주소"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("from_address", "목록을 조회할 주소")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetMultiTxs(data).join();
 ```
 
 
@@ -358,13 +383,14 @@ var result = await maticClient.GetMultiTxs(new Dictionary<string, object>{
 ```
 GET /v3/matic/multi-nft/<contract_address>/<owner_address>/owner-nfts
 ```
-```cs
-var result = await maticClient.GetMultiNftOwnerNfts(new Dictionary<string, object>{
-    {"contract_address", "NFT 컨트렉트 주소"},
-    {"owner_address", "목록을 조회할 주소"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("contract_address", "NFT 컨트렉트 주소")
+data.put("owner_address", "목록을 조회할 주소")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetMultiNftOwnerNfts(data).join();
 ```
 
 
@@ -372,13 +398,14 @@ var result = await maticClient.GetMultiNftOwnerNfts(new Dictionary<string, objec
 ```
 GET /v3/matic/multi-nft/<contract_address>/<creator_address>/creator-nfts
 ```
-```cs
-var result = await maticClient.GetMultiNftCreatorNfts(new Dictionary<string, object>{
-    {"contract_address", "NFT 컨트렉트 주소"},
-    {"creator_address", "목록을 조회할 주소"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("contract_address", "NFT 컨트렉트 주소")
+data.put("creator_address", "목록을 조회할 주소")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetMultiNftCreatorNfts(data).join();
 ```
 
 
@@ -386,13 +413,14 @@ var result = await maticClient.GetMultiNftCreatorNfts(new Dictionary<string, obj
 ```
 GET /v3/matic/multi-nft/<contract_address>/<from_address>/from-transactions
 ```
-```cs
-var result = await maticClient.GetMultiNftTxs(new Dictionary<string, object>{
-    {"contract_address", "NFT 컨트렉트 주소"},
-    {"from_address", "목록을 조회할 주소"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("contract_address", "NFT 컨트렉트 주소")
+data.put("from_address", "목록을 조회할 주소")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetMultiNftTxs(data).join();
 ```
 
 
@@ -400,13 +428,14 @@ var result = await maticClient.GetMultiNftTxs(new Dictionary<string, object>{
 ```
 GET /v3/matic/multi-nft/<contract_address>/<token_id>/info
 ```
-```cs
-var result = await maticClient.GetMultiNftInfo(new Dictionary<string, object>{
-    {"contract_address", "NFT 컨트렉트 주소"},
-    {"token_id", "NFT 토큰 ID"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("contract_address", "NFT 컨트렉트 주소")
+data.put("token_id", "NFT 토큰 ID")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetMultiNftInfo(data).join();
 ```
 
 
@@ -414,13 +443,14 @@ var result = await maticClient.GetMultiNftInfo(new Dictionary<string, object>{
 ```
 GET /v3/matic/multi-nft/<contract_address>/<token_id>/nft-transactions
 ```
-```cs
-var result = await maticClient.GetMultiNftTokenTxs(new Dictionary<string, object>{
-    {"contract_address", "NFT 컨트렉트 주소"},
-    {"token_id", "NFT 토큰 ID"},
-    {"offset", 0},
-    {"limit", 10}
-});
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("contract_address", "NFT 컨트렉트 주소")
+data.put("token_id", "NFT 토큰 ID")
+data.put("offset", "0")
+data.put("limit", "10")
+
+Map<String, Object> result = maticClient.GetMultiNftTokenTxs(data).join();
 ```
 
 
@@ -428,14 +458,15 @@ var result = await maticClient.GetMultiNftTokenTxs(new Dictionary<string, object
 ```
 POST /v3/matic/contract/<contract_address>/read
 ```
-```cs
-var result = await maticClient.ReadContract(new Dictionary<string, object>{
-    {"contract_address", "컨트렉트 주소"},
-    {"method", "실행할 함수 명"},
-    {"return_type", "반환 데이터 타입"},
-    {"parameter_type", new List<T> {"인풋 파라미터 타입"}},
-    {"parameter_data", new List<T> {"인풋 파라미터 데이터"}}
-});
+```java
+Map<String, Object> request = new HashMap<>();
+request.put("contract_address", "컨트렉트 주소");
+request.put("method", "실행할 함수 명");
+request.put("return_type", "반환 데이터 타입");
+request.put("parameter_type", Arrays.asList("인풋 파라미터 타입"));
+request.put("parameter_data", Arrays.asList("인풋 파라미터 데이터"));
+
+Map<String, Object> result = maticClient.ReadContract(data).join();
 ```
 
 
@@ -443,13 +474,14 @@ var result = await maticClient.ReadContract(new Dictionary<string, object>{
 ```
 POST /v3/matic/contract/<contract_address>/write
 ```
-```cs
-var result = await maticClient.WriteContract(new Dictionary<string, object>{
-    {"contract_address", "컨트렉트 주소"},
-    {"from", "트랜잭션을 생성할 주소"},
-    {"private_key", "from 의 프라이빗키"},
-    {"method", "실행할 함수 명"},
-    "{parameter_type", new List<T> {"인풋 파라미터 타입"}},
-    {"parameter_data", new List<T> {"인풋 파라미터 데이터"}}
-});
+```java
+Map<String, Object> request = new HashMap<>();
+request.put("contract_address", "컨트렉트 주소");
+request.put("from", "트랜잭션을 생성할 주소");
+request.put("private_key", "from 의 프라이빗키");
+request.put("method", "실행할 함수 명");
+request.put("parameter_type", Arrays.asList("인풋 파라미터 타입"));
+request.put("parameter_data", Arrays.asList("인풋 파라미터 데이터"));
+
+Map<String, Object> result = maticClient.WriteContract(data).join();
 ```
