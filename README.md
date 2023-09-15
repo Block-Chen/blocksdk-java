@@ -17,7 +17,7 @@ __BlockSDK JAVA__에 오신 것을 환영합니다. 이 저장소에는 BlockSDK
 ## 개발자 문서
 * [BlockSDK REST API V3 문서](https://documenter.getpostman.com/view/20292093/Uz5FKwxw)
 * [BlockSDK REST API V2 문서](https://dojava-v2.blocksdk.com/ko/#fa255f0ccc)
-* [BLOCKSDK JAVA SDK V3 문서](https://github.com/Block-Chen/blocksdk-net/wiki)
+* [BLOCKSDK JAVA SDK V3 문서](https://github.com/Block-Chen/blocksdk-java/wiki)
 
 ## 시작하기
 
